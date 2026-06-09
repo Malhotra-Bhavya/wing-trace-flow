@@ -11,7 +11,6 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -28,20 +27,16 @@ function AuthPage() {
     setError(null);
     setLoading(true);
     try {
-      if (mode === "signin") {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-      } else {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { emailRedirectTo: window.location.origin + "/dashboard" },
-        });
-        if (error) throw error;
-      }
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
       navigate({ to: "/dashboard" });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Authentication failed");
+      const msg = err instanceof Error ? err.message : "Authentication failed";
+      setError(
+        /email.*not.*confirm/i.test(msg)
+          ? "Please confirm your email first. Check your inbox (and spam) for the confirmation link."
+          : msg
+      );
     } finally {
       setLoading(false);
     }
@@ -56,10 +51,10 @@ function AuthPage() {
         <div className="bg-card rounded-2xl shadow-card border p-8">
           <Brand className="!text-base mb-6" />
           <h1 className="font-display text-2xl font-bold tracking-tight">
-            {mode === "signin" ? "Operations sign in" : "Create staff account"}
+            Operations sign in
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Internal access for Multiwings operations staff.
+            Internal access for Multiwings operations staff. New accounts are created by an administrator.
           </p>
 
           <form onSubmit={onSubmit} className="mt-6 space-y-4">
@@ -91,16 +86,9 @@ function AuthPage() {
               disabled={loading}
               className="w-full h-11 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 disabled:opacity-60 shadow-elegant"
             >
-              {loading ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}
+              {loading ? "Please wait…" : "Sign in"}
             </button>
           </form>
-
-          <button
-            onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setError(null); }}
-            className="mt-4 w-full text-sm text-muted-foreground hover:text-foreground"
-          >
-            {mode === "signin" ? "Need an account? Create one" : "Already have an account? Sign in"}
-          </button>
         </div>
       </div>
     </div>
