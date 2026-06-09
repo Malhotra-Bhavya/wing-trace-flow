@@ -47,7 +47,7 @@ function ShipmentDetail() {
   async function updateStatus(next: string) {
     if (!data) return;
     setSavingStatus(true);
-    const { error } = await supabase.from("shipments").update({ current_status: next as Shipment["current_status"] }).eq("id", data.id);
+    const { error } = await supabase.from("shipments").update({ current_status: next as never }).eq("id", data.id);
     setSavingStatus(false);
     if (!error) await load();
   }
