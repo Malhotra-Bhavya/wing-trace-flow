@@ -14,7 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      shipments: {
+        Row: {
+          airline: string | null
+          awb_number: string
+          cargo_description: string | null
+          consignee_address: string
+          consignee_city: string
+          consignee_name: string
+          created_at: string
+          created_by: string | null
+          current_status: Database["public"]["Enums"]["shipment_status"]
+          destination_airport: string
+          flight_number: string | null
+          handling_info: string | null
+          height_cm: number | null
+          id: string
+          issuing_agent: string | null
+          length_cm: number | null
+          origin_airport: string
+          said_to_contain: string | null
+          shipment_date: string
+          shipper_address: string
+          shipper_city: string
+          shipper_name: string
+          updated_at: string
+          weight_kg: number | null
+          width_cm: number | null
+        }
+        Insert: {
+          airline?: string | null
+          awb_number: string
+          cargo_description?: string | null
+          consignee_address: string
+          consignee_city: string
+          consignee_name: string
+          created_at?: string
+          created_by?: string | null
+          current_status?: Database["public"]["Enums"]["shipment_status"]
+          destination_airport: string
+          flight_number?: string | null
+          handling_info?: string | null
+          height_cm?: number | null
+          id?: string
+          issuing_agent?: string | null
+          length_cm?: number | null
+          origin_airport: string
+          said_to_contain?: string | null
+          shipment_date?: string
+          shipper_address: string
+          shipper_city: string
+          shipper_name: string
+          updated_at?: string
+          weight_kg?: number | null
+          width_cm?: number | null
+        }
+        Update: {
+          airline?: string | null
+          awb_number?: string
+          cargo_description?: string | null
+          consignee_address?: string
+          consignee_city?: string
+          consignee_name?: string
+          created_at?: string
+          created_by?: string | null
+          current_status?: Database["public"]["Enums"]["shipment_status"]
+          destination_airport?: string
+          flight_number?: string | null
+          handling_info?: string | null
+          height_cm?: number | null
+          id?: string
+          issuing_agent?: string | null
+          length_cm?: number | null
+          origin_airport?: string
+          said_to_contain?: string | null
+          shipment_date?: string
+          shipper_address?: string
+          shipper_city?: string
+          shipper_name?: string
+          updated_at?: string
+          weight_kg?: number | null
+          width_cm?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +106,14 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      shipment_status:
+        | "Booked"
+        | "Picked Up"
+        | "At Origin Airport"
+        | "In Transit"
+        | "At Destination Airport"
+        | "Out for Delivery"
+        | "Delivered"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +240,16 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      shipment_status: [
+        "Booked",
+        "Picked Up",
+        "At Origin Airport",
+        "In Transit",
+        "At Destination Airport",
+        "Out for Delivery",
+        "Delivered",
+      ],
+    },
   },
 } as const
