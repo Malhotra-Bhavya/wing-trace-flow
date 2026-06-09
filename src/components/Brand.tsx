@@ -1,16 +1,17 @@
 import { Link } from "@tanstack/react-router";
-import { Plane } from "lucide-react";
 import type { ReactNode } from "react";
+import logoAsset from "@/assets/multiwings-logo.png.asset.json";
 
 export function Brand({ className = "" }: { className?: string }) {
   return (
-    <Link to="/" className={`flex items-center gap-2 font-display font-bold ${className}`}>
-      <span className="grid place-items-center w-9 h-9 rounded-lg bg-gradient-hero text-primary-foreground shadow-elegant">
-        <Plane className="w-5 h-5 -rotate-45" />
-      </span>
-      <span className="text-lg tracking-tight">
-        Multiwings <span className="text-primary">Logistics</span>
-      </span>
+    <Link to="/" className={`flex items-center ${className}`} aria-label="Multiwings Logistics — Home">
+      <img
+        src={logoAsset.url}
+        alt="Multiwings Logistics Private Limited"
+        className="h-10 w-auto md:h-11 object-contain"
+        loading="eager"
+        decoding="async"
+      />
     </Link>
   );
 }
