@@ -17,6 +17,12 @@ import { Route as TrackAwbRouteImport } from './routes/track.$awb'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedShipmentsNewRouteImport } from './routes/_authenticated/shipments.new'
 import { Route as AuthenticatedShipmentsIdRouteImport } from './routes/_authenticated/shipments.$id'
+import { Route as AuthenticatedMastersShippersRouteImport } from './routes/_authenticated/masters.shippers'
+import { Route as AuthenticatedMastersRatesRouteImport } from './routes/_authenticated/masters.rates'
+import { Route as AuthenticatedMastersConsigneesRouteImport } from './routes/_authenticated/masters.consignees'
+import { Route as AuthenticatedMastersAwbStockRouteImport } from './routes/_authenticated/masters.awb-stock'
+import { Route as AuthenticatedMastersAirlinesRouteImport } from './routes/_authenticated/masters.airlines'
+import { Route as AuthenticatedMastersAgentsRouteImport } from './routes/_authenticated/masters.agents'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -59,6 +65,42 @@ const AuthenticatedShipmentsIdRoute =
     path: '/shipments/$id',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedMastersShippersRoute =
+  AuthenticatedMastersShippersRouteImport.update({
+    id: '/masters/shippers',
+    path: '/masters/shippers',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMastersRatesRoute =
+  AuthenticatedMastersRatesRouteImport.update({
+    id: '/masters/rates',
+    path: '/masters/rates',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMastersConsigneesRoute =
+  AuthenticatedMastersConsigneesRouteImport.update({
+    id: '/masters/consignees',
+    path: '/masters/consignees',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMastersAwbStockRoute =
+  AuthenticatedMastersAwbStockRouteImport.update({
+    id: '/masters/awb-stock',
+    path: '/masters/awb-stock',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMastersAirlinesRoute =
+  AuthenticatedMastersAirlinesRouteImport.update({
+    id: '/masters/airlines',
+    path: '/masters/airlines',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMastersAgentsRoute =
+  AuthenticatedMastersAgentsRouteImport.update({
+    id: '/masters/agents',
+    path: '/masters/agents',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -66,6 +108,12 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/track/$awb': typeof TrackAwbRoute
+  '/masters/agents': typeof AuthenticatedMastersAgentsRoute
+  '/masters/airlines': typeof AuthenticatedMastersAirlinesRoute
+  '/masters/awb-stock': typeof AuthenticatedMastersAwbStockRoute
+  '/masters/consignees': typeof AuthenticatedMastersConsigneesRoute
+  '/masters/rates': typeof AuthenticatedMastersRatesRoute
+  '/masters/shippers': typeof AuthenticatedMastersShippersRoute
   '/shipments/$id': typeof AuthenticatedShipmentsIdRoute
   '/shipments/new': typeof AuthenticatedShipmentsNewRoute
 }
@@ -75,6 +123,12 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/track/$awb': typeof TrackAwbRoute
+  '/masters/agents': typeof AuthenticatedMastersAgentsRoute
+  '/masters/airlines': typeof AuthenticatedMastersAirlinesRoute
+  '/masters/awb-stock': typeof AuthenticatedMastersAwbStockRoute
+  '/masters/consignees': typeof AuthenticatedMastersConsigneesRoute
+  '/masters/rates': typeof AuthenticatedMastersRatesRoute
+  '/masters/shippers': typeof AuthenticatedMastersShippersRoute
   '/shipments/$id': typeof AuthenticatedShipmentsIdRoute
   '/shipments/new': typeof AuthenticatedShipmentsNewRoute
 }
@@ -86,6 +140,12 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/track/$awb': typeof TrackAwbRoute
+  '/_authenticated/masters/agents': typeof AuthenticatedMastersAgentsRoute
+  '/_authenticated/masters/airlines': typeof AuthenticatedMastersAirlinesRoute
+  '/_authenticated/masters/awb-stock': typeof AuthenticatedMastersAwbStockRoute
+  '/_authenticated/masters/consignees': typeof AuthenticatedMastersConsigneesRoute
+  '/_authenticated/masters/rates': typeof AuthenticatedMastersRatesRoute
+  '/_authenticated/masters/shippers': typeof AuthenticatedMastersShippersRoute
   '/_authenticated/shipments/$id': typeof AuthenticatedShipmentsIdRoute
   '/_authenticated/shipments/new': typeof AuthenticatedShipmentsNewRoute
 }
@@ -97,6 +157,12 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/dashboard'
     | '/track/$awb'
+    | '/masters/agents'
+    | '/masters/airlines'
+    | '/masters/awb-stock'
+    | '/masters/consignees'
+    | '/masters/rates'
+    | '/masters/shippers'
     | '/shipments/$id'
     | '/shipments/new'
   fileRoutesByTo: FileRoutesByTo
@@ -106,6 +172,12 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/dashboard'
     | '/track/$awb'
+    | '/masters/agents'
+    | '/masters/airlines'
+    | '/masters/awb-stock'
+    | '/masters/consignees'
+    | '/masters/rates'
+    | '/masters/shippers'
     | '/shipments/$id'
     | '/shipments/new'
   id:
@@ -116,6 +188,12 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_authenticated/dashboard'
     | '/track/$awb'
+    | '/_authenticated/masters/agents'
+    | '/_authenticated/masters/airlines'
+    | '/_authenticated/masters/awb-stock'
+    | '/_authenticated/masters/consignees'
+    | '/_authenticated/masters/rates'
+    | '/_authenticated/masters/shippers'
     | '/_authenticated/shipments/$id'
     | '/_authenticated/shipments/new'
   fileRoutesById: FileRoutesById
@@ -186,17 +264,71 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedShipmentsIdRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/masters/shippers': {
+      id: '/_authenticated/masters/shippers'
+      path: '/masters/shippers'
+      fullPath: '/masters/shippers'
+      preLoaderRoute: typeof AuthenticatedMastersShippersRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/masters/rates': {
+      id: '/_authenticated/masters/rates'
+      path: '/masters/rates'
+      fullPath: '/masters/rates'
+      preLoaderRoute: typeof AuthenticatedMastersRatesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/masters/consignees': {
+      id: '/_authenticated/masters/consignees'
+      path: '/masters/consignees'
+      fullPath: '/masters/consignees'
+      preLoaderRoute: typeof AuthenticatedMastersConsigneesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/masters/awb-stock': {
+      id: '/_authenticated/masters/awb-stock'
+      path: '/masters/awb-stock'
+      fullPath: '/masters/awb-stock'
+      preLoaderRoute: typeof AuthenticatedMastersAwbStockRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/masters/airlines': {
+      id: '/_authenticated/masters/airlines'
+      path: '/masters/airlines'
+      fullPath: '/masters/airlines'
+      preLoaderRoute: typeof AuthenticatedMastersAirlinesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/masters/agents': {
+      id: '/_authenticated/masters/agents'
+      path: '/masters/agents'
+      fullPath: '/masters/agents'
+      preLoaderRoute: typeof AuthenticatedMastersAgentsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedMastersAgentsRoute: typeof AuthenticatedMastersAgentsRoute
+  AuthenticatedMastersAirlinesRoute: typeof AuthenticatedMastersAirlinesRoute
+  AuthenticatedMastersAwbStockRoute: typeof AuthenticatedMastersAwbStockRoute
+  AuthenticatedMastersConsigneesRoute: typeof AuthenticatedMastersConsigneesRoute
+  AuthenticatedMastersRatesRoute: typeof AuthenticatedMastersRatesRoute
+  AuthenticatedMastersShippersRoute: typeof AuthenticatedMastersShippersRoute
   AuthenticatedShipmentsIdRoute: typeof AuthenticatedShipmentsIdRoute
   AuthenticatedShipmentsNewRoute: typeof AuthenticatedShipmentsNewRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedMastersAgentsRoute: AuthenticatedMastersAgentsRoute,
+  AuthenticatedMastersAirlinesRoute: AuthenticatedMastersAirlinesRoute,
+  AuthenticatedMastersAwbStockRoute: AuthenticatedMastersAwbStockRoute,
+  AuthenticatedMastersConsigneesRoute: AuthenticatedMastersConsigneesRoute,
+  AuthenticatedMastersRatesRoute: AuthenticatedMastersRatesRoute,
+  AuthenticatedMastersShippersRoute: AuthenticatedMastersShippersRoute,
   AuthenticatedShipmentsIdRoute: AuthenticatedShipmentsIdRoute,
   AuthenticatedShipmentsNewRoute: AuthenticatedShipmentsNewRoute,
 }

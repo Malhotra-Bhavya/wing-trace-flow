@@ -34,9 +34,12 @@ export function MasterTable<T extends { id: string; [k: string]: unknown }>({ ti
   const [drawer, setDrawer] = useState(false);
   const [form, setForm] = useState<Record<string, string>>({});
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const db = supabase.from(table as any) as any;
+
   async function load() {
     setLoading(true);
-    const { data, error } = await supabase.from(table as never).select("*").order("created_at", { ascending: false });
+    const { data, error } = await db.select("*").order("created_at", { ascending: false });
     if (error) toast.error(error.message);
     setRows((data as T[]) ?? []);
     setLoading(false);
@@ -65,11 +68,11 @@ export function MasterTable<T extends { id: string; [k: string]: unknown }>({ ti
       payload[fd.key] = fd.type === "number" ? (v === "" || v == null ? null : Number(v)) : (v || null);
     }
     if (editing) {
-      const { error } = await supabase.from(table as never).update(payload).eq("id", editing.id);
+      const { error } = await db.update(payload).eq("id", editing.id);
       if (error) return toast.error(error.message);
       toast.success("Updated");
     } else {
-      const { error } = await supabase.from(table as never).insert(payload);
+      const { error } = await db.insert(payload);
       if (error) return toast.error(error.message);
       toast.success("Created");
     }
@@ -79,7 +82,7 @@ export function MasterTable<T extends { id: string; [k: string]: unknown }>({ ti
 
   async function remove(row: T) {
     if (!confirm(`Delete this ${title.toLowerCase().replace(/s$/, "")}?`)) return;
-    const { error } = await supabase.from(table as never).delete().eq("id", row.id);
+    const { error } = await db.delete().eq("id", row.id);
     if (error) return toast.error(error.message);
     toast.success("Deleted");
     load();
