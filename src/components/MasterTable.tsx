@@ -35,7 +35,7 @@ export function MasterTable<T extends { id: string; [k: string]: unknown }>({ ti
   const [form, setForm] = useState<Record<string, string>>({});
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const db = supabase.from(table as any) as any;
+  const db = () => supabase.from(table as any) as any;
 
   async function load() {
     setLoading(true);
